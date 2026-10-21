@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #1e293b;
+    background-color: #f1f5f9;
+  }
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Isometric interactive pulse ring */
+@keyframes isometric-glow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+
+.animate-glow {
+  animation: isometric-glow 2.5s infinite ease-in-out;
+}
+
+/* Pixel vibe subtle filter effects */
+.filter-sunset {
+  filter: sepia(0.2) saturate(1.2) hue-rotate(-15deg);
+}
+.filter-night {
+  filter: brightness(0.7) hue-rotate(180deg) saturate(0.85);
+}
+.filter-fresh {
+  filter: contrast(1.03) saturate(1.06);
+}

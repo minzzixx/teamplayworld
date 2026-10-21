@@ -1,0 +1,6 @@
+{
+  "name": "TeamPlay World - 가상 오피스 워크플로우",
+  "description": "귀여운 픽셀 아이소메트릭 가상 오피스에서 펼쳐지는 인터랙티브 팀 협업 및 워크플로우 관리 플랫폼",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
