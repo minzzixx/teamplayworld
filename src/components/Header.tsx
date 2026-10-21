@@ -3,8 +3,8 @@ import { Volume2, VolumeX, Sun, Sunset, Moon, Plus, Sparkles, Building2 } from '
 import { TeamMember } from '../types/workflow';
 
 interface HeaderProps {
-  activeView: 'map' | 'workflow' | 'focus' | 'meeting' | 'lounge';
-  setActiveView: (view: 'map' | 'workflow' | 'focus' | 'meeting' | 'lounge') => void;
+  activeView: 'map' | 'workflow' | 'drive' | 'focus' | 'meeting' | 'lounge';
+  setActiveView: (view: 'map' | 'workflow' | 'drive' | 'focus' | 'meeting' | 'lounge') => void;
   onOpenNewTask: () => void;
   currentUser: TeamMember;
   setCurrentUser: (member: TeamMember) => void;
@@ -66,6 +66,18 @@ export const Header: React.FC<HeaderProps> = ({
           >
             워크플로우 보드
             {activeView === 'workflow' && (
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full" />
+            )}
+          </button>
+
+          <button
+            onClick={() => setActiveView('drive')}
+            className={`whitespace-nowrap transition-colors relative py-1 ${
+              activeView === 'drive' ? 'text-blue-600 font-semibold' : 'hover:text-slate-900'
+            }`}
+          >
+            Google Drive
+            {activeView === 'drive' && (
               <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full" />
             )}
           </button>
@@ -207,6 +219,14 @@ export const Header: React.FC<HeaderProps> = ({
           }`}
         >
           워크플로우
+        </button>
+        <button
+          onClick={() => setActiveView('drive')}
+          className={`px-2.5 py-1 text-xs rounded-md whitespace-nowrap ${
+            activeView === 'drive' ? 'bg-blue-600 text-white font-medium' : 'text-slate-600'
+          }`}
+        >
+          Google Drive
         </button>
         <button
           onClick={() => setActiveView('focus')}

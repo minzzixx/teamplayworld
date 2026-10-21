@@ -8,6 +8,7 @@ import { FocusSprintModal } from './components/FocusSprintModal';
 import { MeetingRoomModal } from './components/MeetingRoomModal';
 import { LoungeModal } from './components/LoungeModal';
 import { NoticeModal } from './components/NoticeModal';
+import { GoogleDriveHub } from './components/GoogleDriveHub';
 import { 
   WORKFLOW_STAGES, 
   OFFICE_ZONES, 
@@ -26,10 +27,11 @@ import {
   LoungeKudo, 
   SprintNotice 
 } from './types/workflow';
+import { DriveFile } from './services/googleDrive';
 import { soundFx } from './utils/audio';
 
 export default function App() {
-  const [activeView, setActiveView] = useState<'map' | 'workflow' | 'focus' | 'meeting' | 'lounge'>('map');
+  const [activeView, setActiveView] = useState<'map' | 'workflow' | 'drive' | 'focus' | 'meeting' | 'lounge'>('map');
   const [tasks, setTasks] = useState<WorkflowTask[]>(INITIAL_TASKS);
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>(INITIAL_TEAM_MEMBERS);
   const [currentUser, setCurrentUser] = useState<TeamMember>(INITIAL_TEAM_MEMBERS[0]);
@@ -178,6 +180,34 @@ export default function App() {
     setTasks((prev) => [newTask, ...prev]);
   };
 
+  // Link Drive File to a workflow task
+  const handleAttachFileToTask = (taskId: string, file: DriveFile) => {
+    setTasks((prev) =>
+      prev.map((t) => {
+        if (t.id === taskId) {
+          const currentAttachments = t.driveAttachments || [];
+          if (currentAttachments.some((a) => a.id === file.id)) {
+            return t;
+          }
+          return {
+            ...t,
+            driveAttachments: [
+              ...currentAttachments,
+              {
+                id: file.id,
+                name: file.name,
+                webViewLink: file.webViewLink || 'https://drive.google.com',
+                iconLink: file.iconLink,
+                mimeType: file.mimeType,
+              },
+            ],
+          };
+        }
+        return t;
+      })
+    );
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
       
@@ -222,6 +252,13 @@ export default function App() {
             onSelectTask={(task) => setSelectedTask(task)}
             onMoveTaskStage={handleMoveTaskStage}
             onOpenNewTaskWithStage={handleOpenNewTaskWithStage}
+          />
+        )}
+
+        {activeView === 'drive' && (
+          <GoogleDriveHub
+            tasks={tasks}
+            onAttachFileToTask={handleAttachFileToTask}
           />
         )}
 

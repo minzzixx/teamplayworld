@@ -47,6 +47,14 @@ export interface Subtask {
   completed: boolean;
 }
 
+export interface DriveAttachment {
+  id: string;
+  name: string;
+  webViewLink: string;
+  iconLink?: string;
+  mimeType: string;
+}
+
 export interface WorkflowTask {
   id: string;
   title: string;
@@ -61,6 +69,7 @@ export interface WorkflowTask {
   createdAt: string;
   commentsCount: number;
   estimatedHours: number;
+  driveAttachments?: DriveAttachment[];
 }
 
 export interface MeetingAgendaItem {

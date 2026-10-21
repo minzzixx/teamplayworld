@@ -232,6 +232,66 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
             </div>
           </div>
 
+          {/* Google Drive Attachments */}
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Tag className="w-4 h-4 text-blue-600" />
+                <h3 className="text-xs font-bold text-slate-900">연결된 Google Drive 문서 및 파일</h3>
+              </div>
+              <span className="text-xs text-slate-400">
+                {task.driveAttachments?.length || 0}개 파일
+              </span>
+            </div>
+
+            {task.driveAttachments && task.driveAttachments.length > 0 ? (
+              <div className="space-y-1.5">
+                {task.driveAttachments.map((att) => (
+                  <div
+                    key={att.id}
+                    className="flex items-center justify-between p-2.5 bg-blue-50/50 border border-blue-200/70 rounded-xl text-xs"
+                  >
+                    <div className="flex items-center gap-2 min-w-0 pr-2">
+                      <span className="text-blue-600 font-bold">📄</span>
+                      <a
+                        href={att.webViewLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-semibold text-slate-800 hover:text-blue-600 truncate underline"
+                      >
+                        {att.name}
+                      </a>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <a
+                        href={att.webViewLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-2 py-0.5 text-[10px] font-semibold text-blue-700 bg-white border border-blue-200 rounded-md hover:bg-blue-50 transition-colors"
+                      >
+                        드라이브 열기
+                      </a>
+                      <button
+                        onClick={() => {
+                          const updatedAttachments = task.driveAttachments?.filter((a) => a.id !== att.id);
+                          onUpdateTask({ ...task, driveAttachments: updatedAttachments });
+                        }}
+                        className="p-1 text-slate-400 hover:text-rose-600 rounded"
+                        title="연동 해제"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="p-3 bg-slate-50 border border-dashed border-slate-200 rounded-xl text-center text-xs text-slate-400">
+                연결된 Drive 파일이 없습니다. 상단 'Google Drive' 탭에서 파일을 선택해 태스크에 연결할 수 있습니다.
+              </div>
+            )}
+          </div>
+
           {/* Tags */}
           {task.tags.length > 0 && (
             <div className="space-y-1.5">
